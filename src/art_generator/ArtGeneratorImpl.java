@@ -561,6 +561,75 @@ public class ArtGeneratorImpl {
 		}
 		graphics.dispose();	
 	}
+	
+	public void drawSuperGradient(ArrayList<OriginPointImpl> originPoints) {
+		/* in: list of origin points
+		 * out: n/a
+		 * effect: draw super radial gradients
+		 */
+		
+		Graphics2D graphics  = img.createGraphics();
+		Color oldColor;
+		int oldColorR;
+		int oldColorG;
+		int oldColorB;
+		int biggerSide = getBiggerSide();
+
+		// fill with first color
+		OriginPointImpl currentPoint = originPoints.get(0);
+		this.pickColorClear(new Color(currentPoint.getColorR(), currentPoint.getColorG(), currentPoint.getColorB()));
+
+		// origin points
+		for(int i = 1; i < originPoints.size(); i++) {
+			currentPoint = originPoints.get(i);
+
+			// origin pixel
+			oldColor = new Color(img.getRGB(currentPoint.getX(), currentPoint.getY()));
+			oldColorR = oldColor.getRed();
+			oldColorG = oldColor.getGreen();
+			oldColorB = oldColor.getBlue();
+			graphics.setColor(new Color((int) ((currentPoint.getColorR() + oldColorR)/2), 
+					(int) ((currentPoint.getColorG() + oldColorG)/2),
+					(int) ((currentPoint.getColorB() + oldColorB)/2)));
+			graphics.drawLine(currentPoint.getX(), currentPoint.getY(), currentPoint.getX(), currentPoint.getY());
+			
+			// gradient
+			double distanceFromOrigin;
+			double fadePoint;
+			int newColorR;
+			int newColorG;
+			int newColorB;
+			// for every pixel
+			for (int currentX = 0; currentX < img.getWidth(); currentX++) {
+				for(int currentY = 0; currentY < img.getHeight(); currentY++) {
+					distanceFromOrigin = Math.sqrt((Math.pow(currentX-currentPoint.getX(), 2) + Math.pow(currentY-currentPoint.getY(), 2)));
+					fadePoint = biggerSide * currentPoint.getStrength() / 10;
+					if (distanceFromOrigin > fadePoint) { // fade
+						newColorR = (int) (currentPoint.getColorR() - (currentPoint.getColorR() / fadePoint *
+								distanceFromOrigin));
+						newColorG = (int) (currentPoint.getColorG() - (currentPoint.getColorG() / fadePoint *
+								distanceFromOrigin));
+						newColorB = (int) (currentPoint.getColorB() - (currentPoint.getColorB() / fadePoint *
+								distanceFromOrigin));
+						if(!(newColorR < 0 || (currentPoint.getX() == currentX && currentPoint.getY() == currentY))) {
+							oldColor = new Color(img.getRGB(currentX, currentY));
+							oldColorR = oldColor.getRed();
+							oldColorG = oldColor.getGreen();
+							oldColorB = oldColor.getBlue();
+							graphics.setColor(new Color((int) ((currentPoint.getColorR() + oldColorR)/2), 
+									(int) ((currentPoint.getColorG() + oldColorG)/2),
+									(int) ((currentPoint.getColorB() + oldColorB)/2), newColorAlpha));
+							graphics.drawLine(currentX, currentY, currentX, currentY);
+						}
+					} else { // solid
+						
+					}
+				}
+			}
+			
+		}
+		graphics.dispose();	
+	}
 
 	public void printOriginPoints(ArrayList<OriginPointImpl> originPoints) {
 		for(int i = 0; i < originPoints.size(); i++) {

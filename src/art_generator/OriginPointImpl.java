@@ -7,7 +7,7 @@ public class OriginPointImpl {
 	private int colorR;
 	private int colorG;
 	private int colorB;
-	private double colorAlpha;
+	private float colorAlpha;
 	
 	public OriginPointImpl(int x, int y) {
 		this.x = x;
@@ -17,6 +17,16 @@ public class OriginPointImpl {
 	public OriginPointImpl(int x, int y, int strength) {
 		this.x = x;
 		this.y = y;
+		this.strength = strength;
+	}
+	
+	public OriginPointImpl(int x, int y, int r, int g, int b, int alpha, int strength) {
+		this.x = x;
+		this.y = y;
+		this.colorR = r;
+		this.colorG = g;
+		this.colorB = b;
+		this.colorAlpha = alpha;
 		this.strength = strength;
 	}
 	
@@ -53,7 +63,7 @@ public class OriginPointImpl {
 		this.colorB = colorB;
 	}
 	
-	public void setColorAlpha(double colorAlpha) {
+	public void setColorAlpha(float colorAlpha) {
 		this.colorAlpha = colorAlpha;
 	}
 	
@@ -69,7 +79,7 @@ public class OriginPointImpl {
 		return colorB;
 	}
 	
-	public double getColorAlpha() {
+	public float getColorAlpha() {
 		return colorAlpha;
 	}
 

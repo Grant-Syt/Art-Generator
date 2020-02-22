@@ -57,7 +57,7 @@ public class ArtGeneratorEditor {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				artGenerator.drawLightGradient();
+				artGenerator.lightGradientImpl();
 				imgLabel.repaint();
 			}
 		});
@@ -65,7 +65,7 @@ public class ArtGeneratorEditor {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				artGenerator.drawDarkGradient();
+				artGenerator.darkGradientImpl();
 				imgLabel.repaint();
 			}
 		});
@@ -73,7 +73,7 @@ public class ArtGeneratorEditor {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				artGenerator.drawBoxArt();
+//				artGenerator.drawBoxArt();
 				imgLabel.repaint();
 			}
 		});
@@ -81,7 +81,7 @@ public class ArtGeneratorEditor {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				artGenerator.drawCircleArt();
+				artGenerator.circleArtImpl();
 				imgLabel.repaint();
 			}
 		});

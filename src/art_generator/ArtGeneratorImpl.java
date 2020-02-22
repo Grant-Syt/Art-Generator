@@ -40,7 +40,7 @@ public class ArtGeneratorImpl {
 	/* SECTION 2:
 	 * 
 	 * High level image creation implementations.
-	 * These do not require input.
+	 * 
 	 * 
 	 * 
 	 * 
@@ -64,19 +64,24 @@ public class ArtGeneratorImpl {
 		graphics.dispose();
 	}
 
-	//	public void drawBoxArt() {
-	//		/* in: n/a
-	//		 * return: n/a
-	//		 * effect: draw box art on image
-	//		 */
-	//
-	//		// select origin points
-	//		ArrayList<OriginPointImpl> originPoints = this.selectOriginPoints((int) (Math.random() * 2) + 4);
-	//
-	//		// draw gradient boxes
-	//		this.whiteClear();
-	//		this.drawBoxes(originPoints);
-	//	}
+		public void boxArtImpl() {
+			/* in: n/a
+			 * return: n/a
+			 * effect: draw box art on image
+			 */
+			Graphics2D graphics  = img.createGraphics();
+			this.fillColor(new Color((int) (Math.random()*256), (int) (Math.random()*256),
+					(int) (Math.random()*256), (int) (Math.random()*256)));
+			
+			for (int i = 0; i < 50; i++) {
+				graphics.setColor(new Color((int) (Math.random()*256), (int) (Math.random()*256),
+						(int) (Math.random()*256), (int) (Math.random()*256)));
+				graphics.fillRect((int) ((Math.random()*img.getWidth() - (img.getWidth()*.1))),
+						(int) ((Math.random()*img.getHeight() - (img.getHeight()*.1))),
+						(int) (Math.random()*img.getWidth()*.5), (int) (Math.random()*img.getHeight()*.5));
+			}
+			
+		}
 
 	public void rainbowBoxImpl() {
 		/* in: n/a
@@ -89,7 +94,19 @@ public class ArtGeneratorImpl {
 	}
 
 	public void rainbowPolkaDotImpl() {
-		
+		Graphics2D graphics  = img.createGraphics();
+		int dotDiameter = 100;
+
+		this.fillColor(new Color((int) (Math.random()*256), (int) (Math.random()*256),
+				(int) (Math.random()*256), (int) (Math.random()*256)));
+
+		for(int currentX = 0; currentX < img.getWidth(); currentX += dotDiameter) {
+			for(int currentY = 0; currentY < img.getHeight(); currentY += dotDiameter){
+				graphics.setColor(new Color((int) (Math.random()*256), (int) (Math.random()*256),
+						(int) (Math.random()*256), (int) (Math.random()*256)));
+				graphics.fillOval(currentX, currentY, dotDiameter, dotDiameter);
+			}
+		}
 	}
 
 	public void circleArtImpl() {
@@ -98,12 +115,17 @@ public class ArtGeneratorImpl {
 		 * effect: draw circleWaterColor on image
 		 */
 
-		// select origin points
-		ArrayList<OriginPointImpl> originPoints = this.selectOriginPoints((int) (Math.random() * 5) + 2);
-
-		// draw circles
-		this.fillWhite();
-		circleArt(originPoints);
+		Graphics2D graphics  = img.createGraphics();
+		this.fillColor(new Color((int) (Math.random()*256), (int) (Math.random()*256),
+				(int) (Math.random()*256), (int) (Math.random()*256)));
+		
+		for (int i = 0; i < 50; i++) {
+			graphics.setColor(new Color((int) (Math.random()*256), (int) (Math.random()*256),
+					(int) (Math.random()*256), (int) (Math.random()*256)));
+			graphics.fillOval((int) ((Math.random()*img.getWidth() - (img.getWidth()*.1))),
+					(int) ((Math.random()*img.getHeight() - (img.getHeight()*.1))),
+					(int) (Math.random()*img.getWidth()*.5), (int) (Math.random()*img.getHeight()*.5));
+		}
 	}
 
 	public void darkGradientImpl() {
@@ -134,23 +156,40 @@ public class ArtGeneratorImpl {
 		this.gradient(originPoints);
 	}
 
-		public void vividGradientImpl() {
-			/* in: n/a
-			 * return: n/a
-			 * effect: draw random vivid gradient on image
-			 */
+	public void vividGradientImpl() {
+		/* in: n/a
+		 * return: n/a
+		 * effect: draw random vivid gradient on image
+		 */
+
+		// select origin points
+		ArrayList<OriginPointImpl> originPoints = this.selectOriginPoints((int) (Math.random() * 5) + 2);
+
+		// draw
+		this.vividGradient(originPoints);
+	}
 	
-			// select origin points
-			ArrayList<OriginPointImpl> originPoints = this.selectOriginPoints((int) (Math.random() * 5) + 2);
-	
-			// draw
+	public void customGradientImpl(ArrayList<OriginPointImpl> originPoints, int gradientType) {
+		/* gradient type
+		 * 1 = light
+		 * 2 = dark
+		 * 3 = vivid
+		 */
+		if (gradientType == 1) {
+			this.fillWhite();
+			this.gradient(originPoints);
+		} else if (gradientType == 2) {
+			this.fillBlack();
+			this.gradient(originPoints);
+		} else {
 			this.vividGradient(originPoints);
 		}
+	}
 
 	/* SECTION 3:
 	 * 
 	 * Low level image creation algorithms.
-	 * These may require input.
+	 * 
 	 * 
 	 * 
 	 * 
@@ -164,30 +203,6 @@ public class ArtGeneratorImpl {
 	 * 
 	 */
 
-	public void circleArt(ArrayList<OriginPointImpl> originPoints) {
-		Graphics2D graphics  = img.createGraphics();
-		for(int i = 0; i < originPoints.size(); i++) {
-			OriginPointImpl currentPoint = originPoints.get(i);
-			graphics.setColor(new Color(currentPoint.getColorR(), currentPoint.getColorG(), currentPoint.getColorB(), (int) currentPoint.getColorAlpha()));
-			int circleDiameter;
-			if (img.getHeight() > img.getWidth()) {
-				circleDiameter = (int) img.getHeight()*2;
-			} else {
-				circleDiameter = (int) img.getWidth()*2;
-			}
-			graphics.fillOval(currentPoint.getX() - (circleDiameter/2), currentPoint.getY() - (circleDiameter/2), circleDiameter, circleDiameter);
-		}
-		graphics.dispose();
-	}
-
-		public void boxArt(ArrayList<OriginPointImpl> originPoints) {
-			/* in: list of origin points
-			 * out: n/a
-			 * effect: draw boxes
-			 */
-
-		}
-
 	public void rainbowBox() {
 		/* in: n/a
 		 * out: n/a
@@ -195,10 +210,12 @@ public class ArtGeneratorImpl {
 		 */
 
 		Graphics2D graphics  = img.createGraphics();
+		this.fillColor(new Color((int) (Math.random()*256), (int) (Math.random()*256),
+				(int) (Math.random()*256), (int) (Math.random()*256)));
 
 		// origin point
-		Color color = new Color((int) Math.floor(Math.random() * 256),(int) Math.floor(Math.random() * 256),(int) Math.floor(Math.random() * 256));
-		graphics.setColor(color);
+		graphics.setColor(new Color((int) (Math.random()*256), (int) (Math.random()*256),
+				(int) (Math.random()*256), (int) (Math.random()*256)));
 		OriginPointImpl originPoint = new OriginPointImpl((int) (img.getWidth()/2), (int) (img.getHeight()/2));
 		graphics.drawLine(originPoint.getX(), originPoint.getY(), originPoint.getX(), originPoint.getY());
 
@@ -212,8 +229,8 @@ public class ArtGeneratorImpl {
 		for (int i = 0; i < (biggerSide-1)/2; i++) {
 
 			// color
-			color = new Color((int) Math.floor(Math.random() * 256),(int) Math.floor(Math.random() * 256),(int) Math.floor(Math.random() * 256));
-			graphics.setColor(color);
+			graphics.setColor(new Color((int) (Math.random()*256), (int) (Math.random()*256),
+					(int) (Math.random()*256), (int) (Math.random()*256)));
 
 			// top
 			currentX = originPoint.getX() - layerCount;
@@ -226,21 +243,17 @@ public class ArtGeneratorImpl {
 			currentY += rowLength-1;
 
 			//bottom
-			graphics.drawLine(currentX, currentY, currentX - rowLength-2, currentY);
+			graphics.drawLine(currentX, currentY, currentX - rowLength-2+4, currentY);
 			currentX -= rowLength-1;
 
 			// left
-			graphics.drawLine(currentX, currentY, currentX, currentY - rowLength-2);
+			graphics.drawLine(currentX, currentY, currentX, currentY - rowLength-2+4);
 
 			// adjust
 			rowLength += 2;
 			layerCount++;
 		}
 		graphics.dispose();
-	}
-	
-	public void rainbowPolkaDot() {
-		
 	}
 
 	public void gradient(ArrayList<OriginPointImpl> originPoints) {

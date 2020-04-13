@@ -3,6 +3,7 @@ package art_generator;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,7 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -23,9 +26,10 @@ public class ArtGeneratorEditor {
 		
 		// initialize main window
 		JFrame mainFrame = new JFrame("Art Generator");
-		mainFrame.setMinimumSize(new Dimension(1200, 700));
-		mainFrame.setLocation(50,20);
-		mainFrame.setBackground(Color.lightGray);
+		mainFrame.setMinimumSize(new Dimension(300, 300));
+		mainFrame.setPreferredSize(new Dimension(1000, 600));
+		mainFrame.setLocation(100,100);
+		mainFrame.setBackground(Color.white);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// initialize art generator
@@ -33,19 +37,21 @@ public class ArtGeneratorEditor {
 		
 		// initialize image frame
 		JPanel imgFrame = new JPanel();
+		imgFrame.setBackground(Color.lightGray);
 		Dimension imgFrameDimension = new Dimension(500, 500);
 		imgFrame.setMinimumSize(imgFrameDimension);
-		mainFrame.getContentPane().add(BorderLayout.CENTER, imgFrame);
+//		mainFrame.getContentPane().add(BorderLayout.CENTER, imgFrame);
 		ImageIcon imgIcon = new ImageIcon(artGenerator.getImage());
 		JLabel imgLabel = new JLabel(imgIcon);
 		imgFrame.add(imgLabel);
 		
 		// left side buttons
 		JPanel lButtonFrame = new JPanel();
-		Dimension lButtonFrameDimension = new Dimension(5000, mainFrame.getHeight());
-		lButtonFrame.setMinimumSize(lButtonFrameDimension);
-		lButtonFrame.setLayout(new BoxLayout (lButtonFrame, BoxLayout.Y_AXIS));
-		mainFrame.getContentPane().add(BorderLayout.WEST, lButtonFrame);
+		lButtonFrame.setBackground(Color.white);
+//		Dimension lButtonFrameDimension = new Dimension(5000, mainFrame.getHeight());
+//		lButtonFrame.setMinimumSize(lButtonFrameDimension);
+		lButtonFrame.setLayout(new GridLayout(15, 1));
+//		mainFrame.getContentPane().add(BorderLayout.WEST, lButtonFrame);
 		final JButton boxArtButton = new JButton("Box Art");
 		lButtonFrame.add(boxArtButton);
 		final JButton circleArtButton = new JButton("Cicle Art");
@@ -124,7 +130,7 @@ public class ArtGeneratorEditor {
 		rButtonFrame.setSize(rButtonFrameDimension);
 		rButtonFrame.setMinimumSize(new Dimension(rButtonFrameDimension));
 		rButtonFrame.setLayout(new BoxLayout (rButtonFrame, BoxLayout.Y_AXIS));
-		mainFrame.getContentPane().add(BorderLayout.EAST, rButtonFrame);
+//		mainFrame.getContentPane().add(BorderLayout.EAST, rButtonFrame);
 		final JLabel xLabel = new JLabel("Number of Horizontal Pixels (X):");
 		rButtonFrame.add(xLabel);
 		SpinnerModel modelX = new SpinnerNumberModel(500, 4, 10000, 1);     
@@ -163,23 +169,25 @@ public class ArtGeneratorEditor {
 				}
 			}
 		});
-//		button11.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				artGenerator.newImage(1920, 1080);
-//				imgIcon.setImage(artGenerator.getImage());
-//				imgFrameDimension.width = 1080;
-//				imgFrameDimension.height = 1920;
-//				imgFrame.setSize(imgFrameDimension);
-//				imgFrame.setMinimumSize(new Dimension(imgFrameDimension));
-//				imgLabel.repaint();
-//				imgFrame.repaint();
-//			}
-//		});
+
+		
+		
+
+		
+		// scroll pane
+		JScrollPane scrollPane = new JScrollPane(imgFrame);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(10);
+		scrollPane.getHorizontalScrollBar().setUnitIncrement(10);
+		
+		// split panes
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, lButtonFrame, scrollPane);
+		splitPane.setOneTouchExpandable(true);
+		JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPane, rButtonFrame);
+		splitPane.setOneTouchExpandable(true);
+		mainFrame.add(splitPane2);
 		
 		// finish setup
-//		mainFrame.pack();
+		mainFrame.pack();
 		mainFrame.setVisible(true);
 
 	}

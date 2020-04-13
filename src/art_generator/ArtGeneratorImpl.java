@@ -188,7 +188,7 @@ public class ArtGeneratorImpl {
 
 	/* SECTION 3:
 	 * 
-	 * Low level image creation algorithms.
+	 * Lower level image creation algorithms.
 	 * 
 	 * 
 	 * 

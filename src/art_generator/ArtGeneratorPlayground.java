@@ -16,21 +16,29 @@ public class ArtGeneratorPlayground {
 		x.boxArtImpl();
 		System.out.println(x.saveCurrentImage("boxArt"));
 		
+		System.out.println("\n" + "circle art:");
+		x.circleArtImpl();
+		System.out.println(x.saveCurrentImage("circleArt"));
+		
 		System.out.println("\n" + "rainbow box art:");
 		x.rainbowBoxImpl();
 		System.out.println(x.saveCurrentImage("rainbowBoxArt"));
 		
-		System.out.println("\n" + "circle art:");
-		x.circleArtImpl();
-		System.out.println(x.saveCurrentImage("circleArt"));
+		System.out.println("\n" + "rainbow polka dot:");
+		x.rainbowPolkaDotImpl();
+		System.out.println(x.saveCurrentImage("rainbowPolkaDot"));
+		
+		System.out.println("\n" + "light gradient:");
+		x.lightGradientImpl();
+		System.out.println(x.saveCurrentImage("lightGradient"));
 		
 		System.out.println("\n" + "dark gradient:");
 		x.darkGradientImpl();
 		System.out.println(x.saveCurrentImage("darkGradient"));
 		
-		System.out.println("\n" + "light gradient:");
-		x.lightGradientImpl();
-		System.out.println(x.saveCurrentImage("lightGradient"));
+		System.out.println("\n" + "vivid gradient:");
+		x.vividGradientImpl();
+		System.out.println(x.saveCurrentImage("vividGradient"));
 		
 		System.out.println("\n" + "custom gradient:");
 		ArrayList<OriginPointImpl> pointList = new ArrayList<OriginPointImpl>();
@@ -42,12 +50,5 @@ public class ArtGeneratorPlayground {
 		x.customGradientImpl(pointList, 2);
 		System.out.println(x.saveCurrentImage("customGradient"));
 		
-		System.out.println("\n" + "vivid gradient:");
-		x.vividGradientImpl();
-		System.out.println(x.saveCurrentImage("vividGradient"));
-		
-		System.out.println("\n" + "rainbow polka dot:");
-		x.rainbowPolkaDotImpl();
-		System.out.println(x.saveCurrentImage("rainbowPolkaDot"));
 	}
 }

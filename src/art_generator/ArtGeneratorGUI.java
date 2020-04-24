@@ -143,12 +143,12 @@ public class ArtGeneratorGUI {
 		lOptionPanel.add(optionLabel);
 		final JLabel xLabel = new JLabel("Number of Horizontal Pixels (X):");
 		lOptionPanel.add(xLabel);
-		SpinnerModel modelX = new SpinnerNumberModel(500, 4, 10000, 1);     
+		SpinnerModel modelX = new SpinnerNumberModel(500, 4, 20000, 1);     
 		final JSpinner spinnerX = new JSpinner(modelX);
 		lOptionPanel.add(spinnerX);
 		final JLabel yLabel = new JLabel("Number of Vertical Pixels (Y):");
 		lOptionPanel.add(yLabel);  
-		SpinnerModel modelY = new SpinnerNumberModel(500, 4, 10000, 1);     
+		SpinnerModel modelY = new SpinnerNumberModel(500, 4, 20000, 1);     
 		final JSpinner spinnerY = new JSpinner(modelY);
 		lOptionPanel.add(spinnerY);
 		final JButton changeResButton = new JButton("Change Resolution");

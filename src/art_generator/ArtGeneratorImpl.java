@@ -10,24 +10,18 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class ArtGeneratorImpl {
+	
 	private BufferedImage img = null;
 
-	/* SECTION 1:
-	 * 
-	 * Constructor, image initialization, and retrieval.
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-
 	public ArtGeneratorImpl(int x, int y) {
+		/* in: x,y size in pixels of new image
+		 * effect: new art generator with blank image
+		 */
 		this.newImage(x, y);
 	}
 
 	public void newImage(int x, int y) {
 		/* in: x,y size in pixels of new image
-		 * return: n/a
 		 * effect: new blank image
 		 */
 		img = new BufferedImage(x, y, BufferedImage.TYPE_INT_RGB);
@@ -37,20 +31,11 @@ public class ArtGeneratorImpl {
 		return img;
 	}
 
-	/* SECTION 2:
-	 * 
-	 * High level image creation implementations.
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 *
-	 * 
-	 * 
-	 */
-
 	public void originPointTestImpl() {
+		/* This function tests how origin points are placed. It draws each point with one pixel. It is best used with 
+		 * a 10x10 img as demonstrated in the playground. This may be hard to see with the weak image viewing software,
+		 * but it is a good check of the pixel math of the selectOriginPoints method.
+		 */
 		ArrayList<OriginPointImpl> originPoints = this.selectOriginPoints((int) (Math.random() * 5) + 2);
 		this.fillWhite();
 		Graphics2D graphics = img.createGraphics();

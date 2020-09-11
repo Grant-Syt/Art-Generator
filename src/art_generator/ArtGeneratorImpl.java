@@ -34,7 +34,7 @@ public class ArtGeneratorImpl {
 	public void originPointTestImpl() {
 		/* This function tests how origin points are placed. It draws each point with one pixel. It is best used with 
 		 * a 10x10 img as demonstrated in the playground. This may be hard to see with the weak image viewing software,
-		 * but it is a good check of the pixel math of the selectOriginPoints method.
+		 * but it is a good check of the pixel math of the selectOriginPoints method. words.
 		 */
 		ArrayList<OriginPointImpl> originPoints = this.selectOriginPoints((int) (Math.random() * 5) + 2);
 		this.fillWhite();
